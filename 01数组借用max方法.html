@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>数组借用math的max和min方法</title>
+</head>
+<body>
+    <script>
+         var myMath = {
+             max: function () {
+                 var max = arguments[0];
+                 for(var i=0;i<arguments.length;i++){
+                     if(arguments[i]>max){
+                         max = arguments[i];
+                     }
+                 }
+                 return max;
+             },
+             min: function () {
+                 var min = arguments[0];
+                 for(var i = 0 ; i < arr.length ; i++){
+                     if(min>arr[i]){
+                         min = arr[i];
+                     }
+                 }
+                 return min;
+             }
+         }
+         var arr = [32, 1, 32, 13, 2, 4321, 13, 21, 3];
+         /*
+         *  第一个参数用来指定内部this的指向
+         *  apply会把数组给展开，也就是把里面的元素一个一个的拿出来传递给方法
+         *  apply要求传递一个数组或者伪数组，apply会帮你把数组展开在一个一个传递到方法内部
+         *  这里的第一个参数随便传，但是建议传递一个null，表示不指定内部的this指向
+         * */
+         var max = myMath.max.apply(null,arr);
+         var min = myMath.min.apply(null,arr);
+        console.log(max,min);
+    </script>
+
+    <script>
+        var arr = [32, 1, 32, 13, 2, 4321, 13, 21, 3];
+
+        var myMath = {
+            max: function () {
+                var max = arr[0];
+                for(var i=0;i<arr.length;i++){
+                    if(max<arr[i]){
+                        max = arr[i];
+                    }
+                }
+            },
+            min: function () {
+                var min = arr[0];
+                for(var i=0;i<arr.length;i++){
+                    if(min>arr[i]){
+                        min = arr[i];
+                    }
+                }
+            }
+        };
+
+        /*
+        *  第一个参数用来指定内部的this的指向
+        *  apply会把数组给展开，也就是把里面的元素一个个拿出来，传递给方法
+        *  apply要求传递一个数组或者伪数组，apply会帮忙把数组展开来传递给再一个个的传递到方法内部
+        *  这里apply的第一个参数传什么都无所谓，因为max方法内部不指定this指向
+        *  这里apply的第一个参数随便传，但是建议传递一个null表示不定内部this指向
+        * */
+
+        //通过apply遍历数组，调用方法
+        var max= myMath.max.apply(null,arr);
+        var min= myMath.min.apply(null,arr);
+        console.log(max,min);
+    </script>
+</body>
+</html>

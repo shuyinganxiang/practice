@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>把伪数组转换成数组</title>
+</head>
+<body>
+    <!--<div style="color: pink" class="root">
+        <p >一级</p>
+        <div style="color: yellow">
+            <p>二级</p>
+            <p>二级</p>
+           &lt;!&ndash; <div style="color: lightseagreen">
+                <p>三级</p>
+                <p>三级</p>
+                <p>三级</p>
+            </div>
+            <div style="color: lightseagreen">
+                <p>三级</p>
+                <p>三级</p>
+                <p>三级</p>
+            </div>&ndash;&gt;
+        </div>
+    </div>
+    <script>
+        var root = document.getElementById('root');
+        for(var i = 0 ; i < root.children.length ; i++){
+            var item = root.children[i];
+            item.onclick = function () {
+                for(var j = 0 ; j < item.children.length ; j++){
+                    console.log(item.children[i]);
+                }
+            };
+        }
+    </script>-->
+
+    <script>
+        Array.prototype.mySlice = function () {
+            // 参数个数为0，则从0截到最后
+            // 参数个数为1，则从第一个参数开始的索引  截止到最后
+            // 参数个数为2，则从 第一个参数开始的索引 到第二个参数截止的索引
+            var start= 0;
+            var end = this.length;
+            arguments.length === 1&&(start = arguments[0]);
+            // 逗号隔开两个并列的语句
+            arguments.length === 2&&(start = arguments[0],end = arguments[1]);
+            if(arguments.length == 2){
+                start = arguments[0];
+                end = arguments[1];
+            }
+            var tmp = [];
+            for(var i = start ; i < end ; i++){
+                tmp.push(this[i]);
+            }
+            return tmp;
+        };
+        function fn(){
+            console.log(arguments);
+            // 借用数组的slice得到一个数组
+            var args = [].mySlice.call(arguments,1);
+            // arguments[0]
+            // arguments[1]
+            args.forEach(function (item,index) {
+                console.log(item,index);
+            });
+        }
+        fn(21,3,2,5,45,32);
+    </script>
+</body>
+</html>

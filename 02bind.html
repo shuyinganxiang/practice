@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>bind ---- ☆</title>
+</head>
+<body>
+<button id="btn">按钮</button>
+<script>
+    var obj = {
+        name: 'haha'
+    };
+    var user = {
+        name: '张三',
+        init: function () {
+            // this
+            document.getElementById('btn').onclick = (function () {
+                window.alert(this.name);
+            }.bind(this))
+        },
+        sayName: function () {
+            var handle = function () {
+                console.log(this);
+            }
+            var newHeadle = handle.bind(obj);
+            // JavaScript是求值之后才传递参数
+            setTimeout(newHeadle,1000);
+
+            setTimeout(function () {
+                console.log(this);
+            }.bind(this),2000);
+            var arr = [1,2,3];
+            arr.forEach(function () {
+                console.log(this);
+            }.bind(this));
+        }
+    };
+    user.sayName();
+    user.init();
+</script>
+</body>
+</html>

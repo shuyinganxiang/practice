@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>tree-menu</title>
+</head>
+<body>
+    <ul id="treeContener"></ul>
+    <script>
+        var data = [
+            {
+                name: 'writer',
+                children:[
+                    {name:'韩寒',
+                    children:[
+                        {name:'《1988我想跟这个世界谈谈》'}
+                    ]},
+                    {name:'郭敬明',
+                        children:[
+                            {name:'《幻城》'},
+                            {name:'《悲伤逆流成河》'},
+                            {name:'《爱与痛的边缘》'},
+                            {name:'《梦里花落知多少》'}
+                        ]},
+                    {name:'饶雪漫',
+                        children:[
+                            {name:'《小妖的金色城堡》'},
+                            {name:'《官瑶瑶的风花雪月》'},
+                            {name:'《花糖纸》'},
+                            {name:'《校服的裙摆》'},
+                            {name:'《我要我们在一起》'}
+                        ]},
+                    {name:'明晓溪',
+                        children:[
+                            {name:'《烈火如歌》'},
+                            {name:'《明若晓溪》'},
+                            {name:'《泡沫之夏》'}
+                        ]}
+                ]
+            },
+            {
+                name: 'teacher',
+                children:[
+                    {name: 'small'},
+                    {name: 'old'}
+                ]
+            },
+            {
+                name: 'worker'
+            },
+            {
+                name: 'student'
+            }
+        ];
+
+        /*
+        *  1、获取根节点，创建ul，
+        *  2、获取子节点，创建对应的li，追加到ul中
+        * */
+        var treeContainer = document.getElementById('treeContener');
+
+        tree(data,treeContainer);
+
+        function tree(children,node){
+            // 每循环一次，则创建一个li，将遍历项的name设置为li的内容
+            for(var i = 0;i<children.length;i++){
+                var item = children[i];
+                var li = document.createElement('li');
+                li.innerText = item.name;
+                node.appendChild(li);
+
+
+//                li.addEventListener('click', function () {
+//                    if(li.innerText == item.name+"[+]"){
+//                        li.innerText = item.name+"[-]";
+//                        li.children.style.display = 'block';
+//                    }else{
+//                        li.innerText = item.name+"[+]";
+//                        li.children.style.display = 'none';
+//                    }
+//
+//                });
+
+                /*
+                *  判断当前变量是否有children
+                *  如果有children，则：
+                *       0、给当前的li文本添加 [+]
+                *       1、创建ul作为当前的li的子节点
+                *       2、然后遍历children元素，生成li添加到ul中
+                * */
+                if(item.children){
+                    //console.dir(li);
+                    // 修改li中的内容  即在尾部添加加减号
+                    // 隐藏其所有子元素
+                    li.innerText = item.name+"[+]";
+                    for(var j = 0 ; j < li.children.length ; j++){
+                        li.children[j].style.display = 'none';
+                    }
+                    /*
+                    *  添加li的点击事件，控制其子元素的显示和隐藏
+                    *  子元素显示时，li后面为 [-] 意为展开
+                    *  子元素隐藏时，li后面为 [+] 意为未展开
+                    * */
+                    li.onclick = function () {
+                        if(li.innerText == item.name+"[+]"){
+                            li.innerText = item.name+"[-]";
+                            console.log(123);
+                            for(var j = 0 ; j < li.children.length ; j++){
+                                li.children[j].style.display = 'block';
+                                console.log(li.children[j]+111);
+                            }
+
+                        }else{
+                            li.innerText = item.name+"[+]";
+                            for(var j = 0 ; j < li.children.length ; j++){
+                                li.children[j].style.display = 'none';
+                                console.log(li.children[j]+222);
+                            }
+                        }
+                    };
+                    // 创建ul，作为当前 li的子节点
+                    var ul = document.createElement('ul');
+                    li.appendChild(ul);
+                    // 调用函数，遍历li的子节点
+                    tree(item.children,ul);
+                }
+            }
+        }
+
+        /*var rootTree = document.createElement('ul');
+        for(var i = 0 ; i < data.length ; i++){
+            var item = data[i];
+            // 创建li
+            var li = document.createElement('li');
+            li.innerHTML = item.name;
+            rootTree.appendChild(li);
+        }*/
+
+    </script>
+</body>
+</html>

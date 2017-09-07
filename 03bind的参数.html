@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>bind的参数</title>
+</head>
+<body>
+    <script>
+        var obj = {
+            foo:'bar'
+        }
+
+        function fn(x,y,z){
+            console.log(this,x,y,z);
+        }
+        var newFn = fn.bind(obj,1);
+
+        newFn(4,5);
+        /*
+        *  bind 可以传递参数，但是不调用
+        *  得到bind之后的新函数在调用的时候也可以传参
+        *  当你在调用通过bind得到的新函数的时候，实际上会把你在bind的之后传递的参数和你调用新函数传递的参数进行合并，然后作为函数的参数
+        * */
+    </script>
+</body>
+</html>
